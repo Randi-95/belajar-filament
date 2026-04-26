@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -18,6 +19,9 @@ class UserForm
                     ->required(fn (string $operation) => $operation === 'create')
                     ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
                     ->dehydrated(fn ($state) => filled($state)),
+                Select::make('roles')
+                    ->preload()
+                    ->multiple()->relationship('roles', 'name')
             ]);
     }
 }
