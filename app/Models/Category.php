@@ -10,5 +10,5 @@ class Category extends Model
 
     public function items(){
         return $this->hasMany(Item::class);
-    }
+    }                   
 }   
