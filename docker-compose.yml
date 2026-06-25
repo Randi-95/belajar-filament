@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Service 1: PHP Application (Ganti namaproyek sesuai nama aplikasimu)
+  namaproyek_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravelfilament_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - proxy_net
+
+  # Service 2: Nginx Webserver Internal
+  namaproyek_webserver:
+    image: nginx:alpine
+    container_name: laravelfilament_webserver
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - proxy_net
+
+  # Service 3: MySQL Database
+  namaproyek_db:
+    image: mysql:8.0
+    container_name: laravelfilament_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}_root_super_secret
+    volumes:
+      - namaproyek_dbdata:/var/lib/mysql
+    networks:
+      - proxy_net
+
+networks:
+  proxy_net:
+    external: true
+
+volumes:
+  namaproyek_dbdata:
+    driver: local
