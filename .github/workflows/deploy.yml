@@ -30,5 +30,9 @@ jobs:
             
             sudo docker compose down
             sudo docker compose up -d --build
+
+            sudo chmod -R 777 storage bootstrap/cache
+            
+            sleep 15
             
             sudo docker exec laravelfilament_app php artisan optimize:clear
