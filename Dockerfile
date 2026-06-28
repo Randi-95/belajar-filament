@@ -17,7 +17,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Ambil Composer versi terbaru
-COPY --from=composer:latest /usr/local/bin/composer /usr/local/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory di dalam container
 WORKDIR /var/www
