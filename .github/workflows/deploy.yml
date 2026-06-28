@@ -21,6 +21,9 @@ jobs:
           port: 22
           script: |
             cd ${{ secrets.REMOTE_FOLDER }}
+            
+            git config --global --add safe.directory ${{ secrets.REMOTE_FOLDER }}
+
             git pull origin main
             # Jalankan command untuk update container
             sudo docker compose down
